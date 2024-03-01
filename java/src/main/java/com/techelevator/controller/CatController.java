@@ -2,12 +2,10 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.CatCardDao;
 import com.techelevator.model.CatCard;
+import com.techelevator.model.CatFact;
 import com.techelevator.services.CatFactService;
 import com.techelevator.services.CatPicService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/cards/")
@@ -28,5 +26,23 @@ public class CatController {
         CatCard card = catCardDao.getCatCardById(id);
         return card;
     }
+
+    //@RequestMapping(path = "/random", method = RequestMethod.GET)
+    @GetMapping("random")
+    public CatCard newRandom() {
+        CatCard card = new CatCard();
+        card.setCatFact(catFactService.getFact().getText());
+        card.setImgUrl(catPicService.getPic().getFile());
+
+        return card;
+    }
+
+
+
+
+
+
+
+
 
 }

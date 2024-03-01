@@ -1,8 +1,10 @@
 package com.techelevator.services;
 
+import com.techelevator.exception.DaoException;
 import org.springframework.stereotype.Component;
 
 import com.techelevator.model.CatFact;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -13,7 +15,15 @@ public class RestCatFactService implements CatFactService {
 
 	@Override
 	public CatFact getFact() {
-		return null;
+		CatFact fact = null;
+		try	{
+			fact = restTemplate.getForObject(API_URL, CatFact.class);
+		}
+		catch (RestClientResponseException e) {
+			throw new DaoException(e.toString());
+		}
+
+		return fact;
 	}
 
 }
